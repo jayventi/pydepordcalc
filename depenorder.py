@@ -10,10 +10,10 @@ import random
 
 class DepenNode(object):
     """
-    dependency node object contains all need data to mantane a depenendcies tree
+    Dependency node object contains all need data to mantane a depenendcies tree
     """
     def __init__(self, proj_id, depenendcies=None, status=None):  # TODO set all
-        self.statuses = ('INIT', 'WORKING', 'PROCESSED')
+        self.statuses = ('INIT', 'WORKING', 'PROCESSED', 'VALIDATED')
         if depenendcies is None:
             depenendcies = []
         if status is None:
@@ -78,12 +78,10 @@ class DepenOrder(DepenendcieTree):
     """
     def __init__(self, proj_list, depenendcie_list):
         super(DepenOrder, self).__init__()
-        self.proj_targets = proj_list[:]
-        self.depenendcie_list = depenendcie_list  # target
+        self.proj_targets = proj_list[:]  # copy not link
+        self.depenendcie_list = depenendcie_list
         self.add_proj_list(proj_list)
         self.add_depenendcie_list(depenendcie_list)
-
-        #self.depen_order = []
 
     def get_new_rand_proj(self):
         i = random.randint(0, len(self.proj_targets) - 1)
@@ -94,18 +92,18 @@ class DepenOrder(DepenendcieTree):
     def invert_list(self, a_list):
         lenth = len(a_list)
         new_list = [' '] * lenth
-        for i in range(lenth -1 , -1, -1):           
-            new_list[lenth - i -1] = a_list[i]
+        for i in range(lenth - 1, -1, -1):
+            new_list[lenth - i - 1] = a_list[i]
         return new_list
 
     def sub_depen_list(self, start_proj, depen_order):
-     
+        # core algorithmic component, recursively builds sub dependency list
         proj = start_proj
         prj_depen_list = self._proj_table[proj].depenendcies
         # visit all proj(s) who are depen on start_proj
-        while prj_depen_list:            
+        while prj_depen_list:
             proj = prj_depen_list.pop()
-            # TODO graph not looping, cheek proj not 'WORKING'
+            # check for graph looping, cheek proj not 'WORKING'
             if self._proj_table[proj].status == 'WORKING':
                 #error graph loop found at proj
                 return proj
@@ -120,19 +118,28 @@ class DepenOrder(DepenendcieTree):
         return depen_order
 
     def calc_order(self):
+        # main procedure orchestrates calculation of dependency order
         depen_order = []
-        x = 0
         while self.proj_targets:
             new_rand_proj = self.get_new_rand_proj()
-            #print '\nBEFOR: new_rand_proj', "'" + new_rand_proj + "'", 'self.proj_targets', self.proj_targets   
+            #print '\nBEFOR: new_rand_proj', "'" + new_rand_proj + "'", 'self.proj_targets', self.proj_targets
             depen_order = [new_rand_proj] + self.sub_depen_list(new_rand_proj, depen_order)
             self._proj_table[new_rand_proj].set_status('PROCESSED')
-            #print 'AFTER: depen_order', depen_order     
+            #print 'AFTER: depen_order', depen_order
+        depen_order = self.invert_list(depen_order)
         return depen_order
 
     def build_order_validation(self):
+        valed = 'VALIDATED'
         #validate build order, a correctness test
-        pass
+        depen_order = self.calc_order()
+        for pj in depen_order:
+            depndents = self._proj_table[proj].depenendcies
+            for depndent in depndents:
+                if self._proj_table[pj].status != 'VALIDATED':
+                    return pj
+            self._proj_table[pj].set_status('VALIDATED')
+        return True
 
 ######################
 # nd = DepenNode('a')
@@ -161,4 +168,8 @@ print td.list()
 start_at = 'b'
 
 #print td.sub_depen_list(start_at, depen_order)
-print 'td.calc_order()',td.calc_order()
+calc_order = td.calc_order()
+print 'td.calc_order()',calc_order
+print td.invert_list(calc_order)
+print calc_order[0]
+print 'build_order_validation', td.build_order_validation()
