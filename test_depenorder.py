@@ -1,8 +1,6 @@
 """
 Unit test fixture for depenorder.py
 
-
-TODO
 """
 
 import unittest
@@ -82,6 +80,10 @@ class TestDepenorder(unittest.TestCase):
         self.assertEqual(actual, expected)
 
     def test_dorder_05_calc_order(self):
+        # uses special test method build_order_validation
+        # written specifically to test build worker since
+        # more than one valid test order is possible and
+        # such orders are built randomly
         # setup
         td = DepenOrder(self.projects, self.dependencies)
         actual = td.build_order_validation()

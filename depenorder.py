@@ -1,7 +1,12 @@
 """
+Python Dependency Order Calculator takes as parameters a project list, and a list of project
+to project dependencies and generates a dependency ordered lists of projects. if the projects
+were built in the output dependency order all dependent projects would be built first.
+
+This tiny implementation of a classic build dependency problem was inspired by an exercise
+given in, Cracking The Code Interview problem 4.7 using the second solution method pp254.
+This is my Python 2.7 implementation on its solution. It includes unittests for all methods.
 depenorder.py
-
-
 TODO
 """
 
@@ -141,35 +146,3 @@ class DepenOrder(DepenendcieTree):
             self._proj_table[pj].set_status('VALIDATED')
         return True
 
-######################
-# nd = DepenNode('a')
-# print(nd)
-# nd.add_depenendcie('b')
-# nd.add_depenendcie('s')
-
-# print(nd)
-# print(nd.status)
-
-# test add_proj_list
-
-proj_list = ['a', 'b', 'c', 'd', 'e', 'f']
-depenendcie_list = [['d', 'a'], ['b', 'f'], ['d', 'b'], ['a', 'f'], ['c', 'd']]
-
-# dep_tree = DepenendcieTree()
-# dep_tree.add_proj_list(proj_list)
-# print dep_tree.list()
-# dep_tree.add_depenendcie_list(depens_list)
-# print dep_tree.list()
-
-td = DepenOrder(proj_list, depenendcie_list)
-# print td.list()
-#print td.get_new_rand_proj()
-#print td.invert_list(['1','2','3','4'])
-
-#start_at = 'b'
-#print td.sub_depen_list(start_at, depen_order)
-calc_order = td.calc_order()
-# print 'td.calc_order()',calc_order
-# print td.invert_list(calc_order)
-# print calc_order[0]
-# print 'build_order_validation', td.build_order_validation()
