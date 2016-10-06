@@ -82,7 +82,11 @@ class TestDepenorder(unittest.TestCase):
         self.assertEqual(actual, expected)
 
     def test_dorder_05_calc_order(self):
-        pass
+        # setup
+        td = DepenOrder(self.projects, self.dependencies)
+        actual = td.build_order_validation()
+        expected = True
+        self.assertEqual(actual, expected)
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

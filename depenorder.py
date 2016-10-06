@@ -134,7 +134,7 @@ class DepenOrder(DepenendcieTree):
         #validate build order, a correctness test
         depen_order = self.calc_order()
         for pj in depen_order:
-            depndents = self._proj_table[proj].depenendcies
+            depndents = self._proj_table[pj].depenendcies
             for depndent in depndents:
                 if self._proj_table[pj].status != 'VALIDATED':
                     return pj
@@ -162,14 +162,14 @@ depenendcie_list = [['d', 'a'], ['b', 'f'], ['d', 'b'], ['a', 'f'], ['c', 'd']]
 # print dep_tree.list()
 
 td = DepenOrder(proj_list, depenendcie_list)
-print td.list()
+# print td.list()
 #print td.get_new_rand_proj()
 #print td.invert_list(['1','2','3','4'])
-start_at = 'b'
 
+#start_at = 'b'
 #print td.sub_depen_list(start_at, depen_order)
 calc_order = td.calc_order()
-print 'td.calc_order()',calc_order
-print td.invert_list(calc_order)
-print calc_order[0]
-print 'build_order_validation', td.build_order_validation()
+# print 'td.calc_order()',calc_order
+# print td.invert_list(calc_order)
+# print calc_order[0]
+# print 'build_order_validation', td.build_order_validation()
