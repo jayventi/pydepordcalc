@@ -1,5 +1,6 @@
 
-[![Build Status](https://travis-ci.org/jayventi/pydepordcalc.svg?branch=master)](https://travis-ci.org/jayventi/pydepordcalc)##Python Dependency Order Calculator##
+[![Build Status](https://travis-ci.org/jayventi/pydepordcalc.svg?branch=master)](https://travis-ci.org/jayventi/pydepordcalc)
+##Python Dependency Order Calculator##
 
 ### Description ###
 Python Dependency Order Calculator takes as parameters a project list, and a list of project to project dependencies and generates a dependency ordered lists of projects. if the projects were built in the output dependency order all dependent projects would be built first.
@@ -8,3 +9,11 @@ This tiny implementation of a classic build dependency problem was inspired by a
 
 ###Unit Tests and Validating  Build Orders###
 The interesting thing about this algorithm is that there are more than one valid arrangements of solution orderings. If there were no dependencies there would be n! valid arrangements since no project would be dependent on any other. this particular algorithm randomly chooses projects to explore for dependency chains, therefore the output order chain will produce randomly different valid build orderings. To check that any specific output does build in correct order a build order validation  method is included and used in the unit test to validate the output.
+
+![Dependency Diagram](https://raw.github.com/jayventi/pydepordcalc/dependency_diagram_1.png)
+
+projects = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+dependencies = [['d', 'a'], ['b', 'f'], ['d', 'b'], ['a', 'f'], ['c', 'd']]
+
+dependencies = [['b', 'a'], ['b', 'f'], ['d', 'b'], ['a', 'f'], ['c', 'd'],['g','a']]
+expected_order = ['f', 'e', 'a', 'b', 'd', 'c']
