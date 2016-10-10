@@ -1,4 +1,5 @@
-##Python Dependency Order Calculator##
+
+[![Build Status](https://travis-ci.org/jayventi/pydepordcalc.svg?branch=master)](https://travis-ci.org/jayventi/pydepordcalc)##Python Dependency Order Calculator##
 
 ### Description ###
 Python Dependency Order Calculator takes as parameters a project list, and a list of project to project dependencies and generates a dependency ordered lists of projects. if the projects were built in the output dependency order all dependent projects would be built first.
