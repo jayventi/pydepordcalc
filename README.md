@@ -22,8 +22,9 @@ And a set of project dependencies:
 
 dependencies = [['d', 'a'], ['b', 'f'], ['d', 'b'], ['a', 'f'], ['c', 'd']]
 
-We can build a dependency diagram, however, the particular method is clear if the relationships in the dependencies are inverted in the diagram given here, the arrow points from the dependent project to the project requiring. It will be clear from the method of why this is a handy graph to consider. This gives the following graph:
+We can build a dependency diagram,where the links point from the dependent project to the project requiring them. It will be clear from the method why this is a handy graph to consider. This gives the following graph:
 
+Note, this particular method utilizes a dependency graphs where the dependencies are inverted from what might be expected. 
 
 ![Dependency Diagram](https://raw.github.com/jayventi/pydepordcalc/master/dependency_diagram_1.png)
 
@@ -33,6 +34,8 @@ One of the several possible solutions to building this dependency tree is:
 The method proceeds first inserting all projects into a list graph data structure, then randomly picking any particular node, from the available projects, without replacement, and follows the link recursively to the most dependent element in the chain. This final element will be the most dependent and in a list of build projects and should appear at the end. The full list from this random pick can be output from the most dependent to the least. 
 Example if project 'b' were selected this would generate a partial list [b,d,c].
 
-if the mark all of these projects as processed and removed them from the list of selectable projects we can proceed by choosing another random product project and continuing to build lists always inserting the new list to the left meaning earlier, or less dependent projects. An examination will show that this produces a coherent and complete list.  
+After all are processed and removed from the list of selectable projects we can proceed by choosing another random project and continuing to build partial lists, always merging the new list to the left of earlier list. Since we can't go wrong assuming the remaining projects might be more dependent than those already processed. An examination will show that this produces a coherent and complete dependency build order list. 
 
-This algorithm should run on the order of O(P + D) where T is the number of projects and D is the number of dependencies. 
+It should be noted that in most cases many different valid lists can be produced and as this algorithm proceeds randomly different runs may produce different but still valid buildable output lists.
+
+This algorithm should run on the order of O(P + D) where P is the number of projects and D is the number of dependencies. building the graph object will be On the order of P + D and processing the graph will be on the order of D.
