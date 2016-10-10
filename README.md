@@ -25,7 +25,7 @@ dependencies = [['d', 'a'], ['b', 'f'], ['d', 'b'], ['a', 'f'], ['c', 'd']]
 We can build a dependency diagram, however, the particular method is clear if the relationships in the dependencies are inverted in the diagram given here, the arrow points from the dependent project to the project requiring. It will be clear from the method of why this is a handy graph to consider. This gives the following graph:
 
 
-![Dependency Diagram](https://raw.github.com/jayventi/pydepordcalc/dependency_diagram_1.png)
+![Dependency Diagram](https://raw.github.com/jayventi/pydepordcalc/master/dependency_diagram_1.png)
 
 One of the several possible solutions to building this dependency tree is:
 ['f', 'e', 'a', 'b', 'd', 'c']
